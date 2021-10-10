@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.youtubeapp.databinding.VideoItemBinding
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
-class RecyclerViewAdapter(private val videoList: ArrayList<String>): RecyclerView.Adapter<RecyclerViewAdapter.ItemViewHolder>() {
+class RecyclerViewAdapter(private val videoList: ArrayList<Video>, private val player: YouTubePlayer):
+    RecyclerView.Adapter<RecyclerViewAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(val binding: VideoItemBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -21,7 +24,10 @@ class RecyclerViewAdapter(private val videoList: ArrayList<String>): RecyclerVie
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = videoList[position]
         holder.binding.apply {
-
+            videoBtn.text = item.name
+            videoBtn.setOnClickListener {
+                player.loadVideo(item.id, 0f)
+            }
         }
     }
 

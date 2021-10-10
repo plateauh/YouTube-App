@@ -2,44 +2,65 @@ package com.example.youtubeapp
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkInfo
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import androidx.core.content.getSystemService
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 
-lateinit var noConnectionLinearLayout: LinearLayout
-lateinit var refreshImageButton: ImageButton
+
+lateinit var videosRecyclerView: RecyclerView
+lateinit var videoPlayerView: YouTubePlayerView
+lateinit var videoPlayer: YouTubePlayer
+var videosList = arrayListOf(
+    Video("fdw-H0Rkmig", "Friends Journey"),
+    Video("Q8KKuqdy-3A", "The Hero")
+    )
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        checkConnection()
 
+        videoPlayerView = findViewById(R.id.youtube_player_view)
+        videoPlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                super.onReady(youTubePlayer)
+                videoPlayer = youTubePlayer
+                videoPlayer.loadVideo(videosList[0].id, 0f)
+
+                videosRecyclerView = findViewById(R.id.videos_rv)
+                videosRecyclerView.adapter = RecyclerViewAdapter(videosList, videoPlayer)
+                videosRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            }
+        })
+
+        checkConnection()
     }
 
-
-    private fun checkConnection(){
-        noConnectionLinearLayout = findViewById(R.id.no_connection_LL)
+    private fun checkConnection() {
+        val connectionLinearLayout = findViewById<LinearLayout>(R.id.connection_LL)
+        val noConnectionLinearLayout = findViewById<LinearLayout>(R.id.no_connection_LL)
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         if (activeNetwork?.isConnectedOrConnecting == true){
-            noConnectionLinearLayout.visibility = INVISIBLE
+            noConnectionLinearLayout.visibility = View.INVISIBLE
+            connectionLinearLayout.visibility = View.VISIBLE
         }
         else {
-            noConnectionLinearLayout.visibility = VISIBLE
-            refreshImageButton = findViewById(R.id.refresh_btn)
+            connectionLinearLayout.visibility = View.INVISIBLE
+            noConnectionLinearLayout.visibility = View.VISIBLE
+            val refreshImageButton = findViewById<ImageButton>(R.id.refresh_btn)
             refreshImageButton.setOnClickListener {
                 checkConnection()
             }
         }
     }
-
 }
