@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             app:autoPlay="true"
             app:showFullScreenButton="false"
-            app:videoId="fdw-H0Rkmig" />
+            app:videoId="ZYaZ6Odbx_Y" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/videos_rv"

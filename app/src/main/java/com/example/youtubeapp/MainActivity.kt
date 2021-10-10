@@ -20,9 +20,11 @@ lateinit var videosRecyclerView: RecyclerView
 lateinit var videoPlayerView: YouTubePlayerView
 lateinit var videoPlayer: YouTubePlayer
 var videosList = arrayListOf(
-    Video("fdw-H0Rkmig", "Friends Journey"),
-    Video("Q8KKuqdy-3A", "The Hero")
-    )
+                        Video("ZYaZ6Odbx_Y", "Al-Fatihah (The Opener)"),
+                        Video("uv3VXLVK6FQ", "Al-'Ikhlas (The Sincerity)"),
+                        Video("8IQn1ZZYewc", "Al-Falaq (The Daybreak)"),
+                        Video("G8h_2bvkHa0", "An-Nas (The Mankind)")
+                        )
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
