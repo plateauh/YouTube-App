@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
                 videosRecyclerView = findViewById(R.id.videos_rv)
                 videosRecyclerView.adapter = RecyclerViewAdapter(videosList, videoPlayer)
-                videosRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+                videosRecyclerView.layoutManager = GridLayoutManager(this@MainActivity, 3)
             }
         })
 
